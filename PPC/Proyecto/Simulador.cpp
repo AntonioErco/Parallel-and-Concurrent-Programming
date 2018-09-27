@@ -13,6 +13,49 @@ using namespace std;
 
 int main() {
 }
+Simulador::Simulador() {
+	this->init();
+
+}
+
+Simulador::~Simulador() {
+
+}
+
+void Simulador::init() {
+
+	cout << "Cantidad de Personas: ";
+	cin >> cantidadP;
+
+	cout << "Potencia Infecciosa de Virus: ";
+	cin >> potenciaVirus;
+
+	cout << "Probabilidad de Recuperación: ";
+	cin >> probaRecu;
+
+	cout << "Probabilidad de Muerte: ";
+	cin >> probaMuerte;
+
+	cout << "Porcentaje de Personas Originalmente Infectadas: ";
+	cin >> ogInfectada;
+
+	cout << "Tamaño del Espacio Bidimensional: " << endl;
+	cout << "1) 100x100 \n2) 500x500 \n3) 1000x1000" << endl;
+	cin >> tamaño;
+	if (tamaño == 1) {
+		tamaño = 100;
+	}
+	else if (tamaño == 2) {
+		tamaño = 500;
+	}
+	else {
+		tamaño = 1000;
+	}
+
+	cout << "Duración de la Simulación: ";
+	cin >> tics;
+
+}
 
 void Simulador::iniciarMatriz() {
 	// Creacion de listas
