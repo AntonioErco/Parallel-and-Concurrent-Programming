@@ -6,36 +6,15 @@
 #include <omp.h>
 #include <list>
 #include <time.h>
+#include "Simulador.h"
 #include "Persona.h"
+
 using namespace std;
 
-void iniciarMatriz();
-void actualizarMatriz();
-int personasInfectadas(int i, int j);
-void actualizarEstado(list<Persona>::iterator it,int inf);
-void moverPersonas(int i, int j, list<Persona>::iterator it);
-
-int tamaño = 10;
-int cantidadP = 100;
-int randomInt1 = 0;
-int randomInt2 = 0;
-int tics = 0;
-list<Persona>* matriz[10][10];
-
-
-
 int main() {
-	srand(time(NULL));
-	iniciarMatriz();
-	/*
-	while (tics <= 1000000) {
-	actualizarMatriz();
-	tics++;
-	}
-	*/
 }
 
-void iniciarMatriz() {
+void Simulador::iniciarMatriz() {
 	// Creacion de listas
 	for (int i = 0; i < tamaño; ++i) {
 		for (int j = 0; j < tamaño; ++j) {
@@ -53,7 +32,7 @@ void iniciarMatriz() {
 	}
 }
 
-void actualizarMatriz() {
+void Simulador::actualizarMatriz() {
 	list<Persona>::iterator it;
 	int inf;
 	for (int i = 0; i < tamaño; ++i) {
@@ -67,7 +46,7 @@ void actualizarMatriz() {
 	}
 }
 
-int personasInfectadas(int i, int j) {
+int Simulador::personasInfectadas(int i, int j) {
 	list<Persona>::iterator it;
 	Estado estado;
 	int nInfectadas = 0;
@@ -94,7 +73,7 @@ int personasInfectadas(int i, int j) {
 	return nInfectadas;
 }
 
-void actualizarEstado(list<Persona>::iterator it,int inf) {
+void Simulador::actualizarEstado(list<Persona>::iterator it,int inf) {
 	if ((*it).getActivo() == true) {
 		
 	}
@@ -103,7 +82,7 @@ void actualizarEstado(list<Persona>::iterator it,int inf) {
 	}
 }
 
-void moverPersonas(int i, int j, list<Persona>::iterator it) {
+void Simulador::moverPersonas(int i, int j, list<Persona>::iterator it) {
 	int indice;
 	int random;
 	do {
