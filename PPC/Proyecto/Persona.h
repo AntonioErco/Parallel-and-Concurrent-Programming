@@ -4,7 +4,7 @@
 
 using namespace std;
 
-enum Estado{Susceptible, Infectada, Muerta, Recuperada};
+enum Estado { Susceptible, Infectada, Muerta, Recuperada };
 
 class Persona {
 
@@ -20,6 +20,7 @@ public:
 
 
 private:
+
 	Estado estado;
 	bool activo;
 };
