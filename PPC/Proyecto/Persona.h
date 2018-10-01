@@ -1,3 +1,4 @@
+
 #ifndef PPC_GoL_P // Programación Paralela y Concurrente - Conway's Game of Life
 #define PPC_GoL_P
 #include <iostream>
@@ -14,8 +15,11 @@ public:
 
 	void setEstado(Estado est);
 	void setActivo(bool act);
+	void resetTiempo();
+	void addTiempo();
 	Estado getEstado();
 	bool getActivo();
+	int getTiempoInfectado();
 
 
 
@@ -23,6 +27,7 @@ private:
 
 	Estado estado;
 	bool activo;
+	int tiempoInfect;
 };
 
 #endif
