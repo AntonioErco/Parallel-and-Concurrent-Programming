@@ -1,8 +1,7 @@
-
 #include "Persona.h"
 
 Persona::Persona() {
-
+	activo = true;
 }
 
 Persona::~Persona() {
