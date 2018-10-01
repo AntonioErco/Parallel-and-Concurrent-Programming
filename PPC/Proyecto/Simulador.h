@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 #ifndef PPC_GoL_S // Programación Paralela y Concurrente - Conway's Game of Life
 #define PPC_GoL_S
 #include <vector>
@@ -24,8 +25,8 @@ public:
 	void iniciarMatriz();
 	void actualizarMatriz();
 	int personasInfectadas(int i, int j);
-	void actualizarEstado(list<Persona>::iterator it, int inf);
-	void moverPersonas(int i, int j, list<Persona>::iterator it);
+	void actualizarEstado(int i, int j, int y, int inf);
+	void moverPersonas(int i, int j, int y);
 	void init();
 
 private:
@@ -33,7 +34,7 @@ private:
 	int cantidadP;
 	int potenciaVirus;
 	int probaRecu;
-	int probaMuerte;
+	int ticsMuerte;
 	int cantInfectada;
 	int tamaño;
 	int tics;
@@ -42,7 +43,7 @@ private:
 	int tSusceptibles;
 	int tMuertas;
 	int tRecuperadas;
-	vector <vector<list<Persona>>> matriz;
+	vector <vector< vector<Persona>>> matriz;
 };
 
 #endif
