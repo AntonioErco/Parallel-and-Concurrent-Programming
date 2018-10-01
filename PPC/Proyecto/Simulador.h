@@ -34,7 +34,7 @@ private:
 	int potenciaVirus;
 	int probaRecu;
 	int probaMuerte;
-	int probaInfectada;
+	int cantInfectada;
 	int tamaño;
 	int tics;
 
