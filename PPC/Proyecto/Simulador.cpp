@@ -19,15 +19,15 @@ void Simulador::init() {
 	cout << "Potencia Infecciosa de Virus [0-10]: ";
 	cin >> potenciaVirus;
 
-	cout << "Probabilidad de Recuperación [0-10]: ";
+	cout << "Probabilidad de Recuperacion [0-10]: ";
 	cin >> probaRecu;
 
 	cout << "Probabilidad de Muerte [0-10]: ";
 	cin >> probaMuerte;
 
 	cout << "Porcentaje de Personas Originalmente Infectadas: ";
-	cin >> probaInfectada;
-	probaInfectada = (cantidadP / 100)*probaInfectada;
+	cin >> cantInfectada;
+	cantInfectada = (cantidadP / 100)*cantInfectada;
 
 	cout << "Tamaño del Espacio Bidimensional: " << endl;
 
@@ -55,30 +55,35 @@ void Simulador::iniciarMatriz() {
 		matriz[i].resize(tamaño);
 	}
 
-	int cn = 0;
 	// Insercion de las Personas
-	for (int k = 0; k < cantidadP; ++k) {
+	int pInfectadas = cantInfectada*10;
+	int pSaludables = cantidadP - pInfectadas;
+
+	for (int k = 0; k < pSaludables; ++k) {
 		Persona* p = new Persona();
-		randomInt1 = rand() % 10;
-		if (randomInt1 < potenciaVirus) {
-			p->setEstado(Infectada);
-		}
-		else {
-			p->setEstado(Susceptible);
-		}
 		// Inicializar datos de las Persona p
+		p->setEstado(Susceptible);
+		// Escoger Posición
 		randomInt1 = rand() % tamaño;
 		randomInt2 = rand() % tamaño;
 		matriz[randomInt1][randomInt2].push_back(*p);
+		tSusceptibles++;
+	}
+	for (int k = 0; k < pInfectadas; ++k) {
+		Persona* p = new Persona();
+		// Inicializar datos de las Persona p
+		p->setEstado(Infectada);
+		// Escoger Posición
+		randomInt1 = rand() % tamaño;
+		randomInt2 = rand() % tamaño;
+		matriz[randomInt1][randomInt2].push_back(*p);
+		tInfectadas++;
 	}
 
-	/*
-	for (int l = 0; l < tamaño-1; ++l) {
-		for (int g = 0; g < tamaño; ++g) {
-			cout << matriz[l][g].size() << " l " << l << " g " << g <<  endl;
-		}
-	}*/
-
+	cout << "Muertas: " << tMuertas << endl;
+	cout << "Recuperadas: " << tRecuperadas << endl;
+	cout << "Infectadas: " << tInfectadas << endl;
+	cout << "Susceptibles: " << tSusceptibles << endl;
 }
 
 
@@ -156,7 +161,7 @@ void Simulador::actualizarEstado(list<Persona>::iterator it, int inf) {
 				break;
 			}
 			case Susceptible: {
-				if (randomInt < probaInfectada*inf) {
+				if (randomInt < cantInfectada*inf) {
 					(*it).setEstado(Infectada);
 				}
 				break;
