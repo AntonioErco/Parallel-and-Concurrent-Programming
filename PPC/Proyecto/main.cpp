@@ -8,10 +8,10 @@ int main() {
 	sim->iniciarMatriz();
 	int tics = 0;
 
-	cout << "Duración de la Simulación/Cantidad de Tics: " << endl;
+	cout << "Duracion de la Simulacioon/Cantidad de Tics: " << endl;
 	cin >> tics;
+
 	for (int x = 0; x < tics; ++x) {
-		sim->actualizarMatriz();
 		sim->actualizarMatriz();
 	}
 
