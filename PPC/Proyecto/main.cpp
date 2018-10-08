@@ -10,9 +10,16 @@ int main() {
 	cout << "Duracion de la Simulacion/Cantidad de Tics: " << endl;
 	cin >> tics;
 
+	string output;
 	for (int x = 0; x < tics; ++x) {
-		sim->actualizarMatriz();
+		output += "\n\nTic: " + to_string(x);
+		output += sim->actualizarMatriz();
 	}
+
+	cout << output << endl;
+	ofstream out("C:/Users/ExtremeTech/source/repos/Proyecto/dias.txt");
+	out << output;
+	out.close();
 
 	int n;
 	cin >> n;
