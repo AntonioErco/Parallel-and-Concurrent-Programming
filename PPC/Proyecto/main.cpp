@@ -6,9 +6,13 @@ int main() {
 	Simulador *sim = new Simulador();
 	sim->iniciarMatriz();
 	int tics = 0;
+	int hilos = 0;
 
 	cout << "Duracion de la Simulacion/Cantidad de Tics: " << endl;
 	cin >> tics;
+	cout << "Cantidad de Hilos: " << endl;
+	cin >> hilos;
+	sim->cantidadHilos(hilos);
 
 	string output;
 	for (int x = 0; x < tics; ++x) {
