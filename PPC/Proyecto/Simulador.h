@@ -26,7 +26,7 @@ public:
 	int personasInfectadas(int i, int j);
 	void actualizarEstado(int i, int j, int y, int inf);
 	void moverPersonas(int i, int j, int y);
-	void cantidadHilos(int n);
+	void cantidadHilosYTics(int n,int t);
 	void init();
 
 private:
