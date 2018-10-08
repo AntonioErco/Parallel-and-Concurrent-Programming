@@ -89,39 +89,44 @@ void Simulador::iniciarMatriz() {
 
 string Simulador::actualizarMatriz() {
 	string output;
-	tMuertas = 0;
-	tRecuperadas = 0;
-	tInfectadas = 0;
-	tSusceptibles = 0;
-	int infectadas = 0;
+	for (int x = 0; x < tics; ++x) {
 
-	// Recorrido actualizando la posicion de las personas
+		tMuertas = 0;
+		tRecuperadas = 0;
+		tInfectadas = 0;
+		tSusceptibles = 0;
+		int infectadas = 0;
+
+		// Recorrido actualizando la posicion de las personas
 #pragma omp parallel for num_threads(hilos)
-	{
-		for (int i = 0; i < tamaño; ++i) {
-			for (int j = 0; j < tamaño; ++j) {
-				for (int y = 0; y < matriz[i][j].size(); ++y) {
-					moverPersonas(i, j, y);
+		{
+			for (int i = 0; i < tamaño; ++i) {
+				for (int j = 0; j < tamaño; ++j) {
+					for (int y = 0; y < matriz[i][j].size(); ++y) {
+						moverPersonas(i, j, y);
+					}
 				}
 			}
-		}
-
+			
 #pragma omp barrier
-	// Recorrrido actualizando el estado de las personas
-		for (int i = 0; i < tamaño; ++i) {
-			for (int j = 0; j < tamaño; ++j) {
-				infectadas = personasInfectadas(i, j);
-				for (int y = 0; y < matriz[i][j].size(); ++y) {
-					actualizarEstado(i, j, y, infectadas);
+
+			// Recorrrido actualizando el estado de las personas
+			for (int i = 0; i < tamaño; ++i) {
+				for (int j = 0; j < tamaño; ++j) {
+					infectadas = personasInfectadas(i, j);
+					for (int y = 0; y < matriz[i][j].size(); ++y) {
+						actualizarEstado(i, j, y, infectadas);
+					}
 				}
 			}
 		}
-	}
 
-	output += "\nSusceptibles: " + to_string(tSusceptibles);
-	output += "\nInfectadas: " + to_string(tInfectadas);
-	output += "\nRecuperadas: " + to_string(tRecuperadas);
-	output += "\nMuertas: " + to_string(tMuertas);
+		output += "\n\nTic: " + to_string(x);
+		output += "\nSusceptibles: " + to_string(tSusceptibles);
+		output += "\nInfectadas: " + to_string(tInfectadas);
+		output += "\nRecuperadas: " + to_string(tRecuperadas);
+		output += "\nMuertas: " + to_string(tMuertas);
+	}
 	return output;
 }
 
@@ -131,7 +136,7 @@ int Simulador::personasInfectadas(int i, int j) {
 	Estado estado;
 	int nInfectadas = 0;
 	for (int y = 0; y < matriz[i][j].size(); ++y) {
-		if (matriz[i][j][y].getActivo()&&(matriz[i][j][y].getEstado() == Infectada)){
+		if (matriz[i][j][y].getEstado() == Infectada){
 			nInfectadas++;
 		}
 	}
@@ -142,7 +147,6 @@ int Simulador::personasInfectadas(int i, int j) {
 void Simulador::actualizarEstado(int i, int j, int y, int inf) {
 	int randomInt = rand() % 10;
 	Estado est = matriz[i][j][y].getEstado();
-
 	switch (est) {
 	case Infectada: {
 		if (randomInt < probaRecu) {
@@ -222,6 +226,7 @@ void Simulador::moverPersonas(int i, int j, int y) {
 	}
 }
 
-void Simulador::cantidadHilos(int n) {
+void Simulador::cantidadHilosYTics(int n, int t) {
 		hilos = n;
+		tics = t;
 }
