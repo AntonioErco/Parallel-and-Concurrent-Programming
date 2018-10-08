@@ -27,3 +27,4 @@ Estado Persona::getEstado() {
 int Persona::getTiempoInfectado() {
 	return tiempoInfect;
 }
+
