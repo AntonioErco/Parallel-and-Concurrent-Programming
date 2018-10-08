@@ -45,7 +45,6 @@ private:
 	int tRecuperadas;
 
 	int hilos;
-	int tHilo;
 
 	vector <vector< vector <Persona> > > matriz;
 };
