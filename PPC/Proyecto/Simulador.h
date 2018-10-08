@@ -22,10 +22,11 @@ public:
 	~Simulador();
 
 	void iniciarMatriz();
-	void actualizarMatriz();
+	string actualizarMatriz();
 	int personasInfectadas(int i, int j);
 	void actualizarEstado(int i, int j, int y, int inf);
 	void moverPersonas(int i, int j, int y);
+	void cantidadHilos(int n);
 	void init();
 
 private:
@@ -42,7 +43,10 @@ private:
 	int tSusceptibles;
 	int tMuertas;
 	int tRecuperadas;
-	int tkhe;
+
+	int hilos;
+	int tHilo;
+
 	vector <vector< vector <Persona> > > matriz;
 };
 
