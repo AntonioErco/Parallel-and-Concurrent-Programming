@@ -12,13 +12,9 @@ int main() {
 	cin >> tics;
 	cout << "Cantidad de Hilos: " << endl;
 	cin >> hilos;
-	sim->cantidadHilos(hilos);
 
-	string output;
-	for (int x = 0; x < tics; ++x) {
-		output += "\n\nTic: " + to_string(x);
-		output += sim->actualizarMatriz();
-	}
+	sim->cantidadHilosYTics(hilos,tics);
+	string output = sim->actualizarMatriz();
 
 	cout << output << endl;
 	ofstream out("C:/Users/ExtremeTech/source/repos/Proyecto/dias.txt");
