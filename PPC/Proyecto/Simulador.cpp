@@ -27,11 +27,11 @@ void Simulador::init() {
 
 	cout << "Porcentaje de Personas Originalmente Infectadas [0 - 100]: ";
 	cin >> cantInfectada;
-	cantInfectada = (cantidadP / 100)*cantInfectada;
+	cantInfectada = (cantidadP / cantInfectada);
 
 	cout << "Tamaño del Espacio Bidimensional: " << endl;
 
-	cout << "1) 100x100 \n2) 500x500 \n3) 1000x1000 o otro num para 35x35" << endl;
+	cout << "1) 100x100 \n2) 500x500 \n3) 1000x1000 \n4 35x35" << endl;
 	cin >> tamano;
 
 	if (tamano== 1) {
@@ -58,7 +58,7 @@ void Simulador::iniciarMatriz() {
 	}
 
 	// Insercion de las Personas
-	int pInfectadas = cantInfectada * 10;
+	int pInfectadas = cantInfectada;
 	int pSaludables = cantidadP - pInfectadas;
 
 	for (int k = 0; k < pSaludables; ++k) {
@@ -156,7 +156,6 @@ void Simulador::actualizarEstado(int i, int j, int y, int inf) {
 		if(matriz[i][j][y].getTiempoInfectado() >= ticsMuerte){
 			random_device rd;
 			int randomInt1 = rd() % 100;
-			cout << "random: " << randomInt1 << endl;
 			bool muerta = true;
 			for (int g = 0; g < inf; g++) {
 				if (randomInt1 < probaRecu) {
