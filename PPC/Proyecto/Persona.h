@@ -13,11 +13,9 @@ public:
 	~Persona();
 
 	void setEstado(Estado est);
-	void setActivo(bool act);
 	void resetTiempo();
 	void addTiempo();
 	Estado getEstado();
-	bool getActivo();
 	int getTiempoInfectado();
 
 
@@ -25,7 +23,6 @@ public:
 private:
 
 	Estado estado;
-	bool activo;
 	int tiempoInfect;
 };
 
