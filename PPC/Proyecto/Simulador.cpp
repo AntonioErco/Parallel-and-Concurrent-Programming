@@ -31,13 +31,13 @@ void Simulador::init() {
 
 	cout << "Tamaño del Espacio Bidimensional: " << endl;
 
-	cout << "1) 100x100 \n2) 500x500 \n3) 1000x1000 \n4 35x35" << endl;
+	cout << "1) 100x100 \n2) 500x500 \n3) 1000x1000 \n4) 35x35" << endl;
 	cin >> tamano;
 
-	if (tamano== 1) {
+	if (tamano == 1) {
 		tamano = 100;
 	}
-	else if (tamano== 2) {
+	else if (tamano == 2) {
 		tamano = 500;
 	}
 	else if (tamano == 3) {
@@ -93,7 +93,7 @@ string Simulador::actualizarMatriz() {
 	string output;
 	int tics = 0;
 
-	while(tInfectadas != 0){
+	while (tInfectadas != 0) {
 
 		tMuertas = 0;
 		tRecuperadas = 0;
@@ -103,26 +103,26 @@ string Simulador::actualizarMatriz() {
 
 		// Recorrido actualizando la posicion de las personas
 #pragma omp parallel for num_threads(hilos)
-			for (int i = 0; i < tamano; ++i) {
-				for (int j = 0; j < tamano; ++j) {
-					for (int y = 0; y < matriz[i][j].size(); ++y) {
-						moverPersonas(i, j, y);
-					}
+		for (int i = 0; i < tamano; ++i) {
+			for (int j = 0; j < tamano; ++j) {
+				for (int y = 0; y < matriz[i][j].size(); ++y) {
+					moverPersonas(i, j, y);
 				}
 			}
-			
-//ragma omp barrier
+		}
 
-			// Recorrrido actualizando el estado de las personas
+		//ragma omp barrier
+
+		// Recorrrido actualizando el estado de las personas
 #pragma omp parallel for num_threads(hilos)
-			for (int i = 0; i < tamano; ++i) {
-				for (int j = 0; j < tamano; ++j) {
-					infectadas = personasInfectadas(i, j);
-					for (int y = 0; y < matriz[i][j].size(); ++y) {
-						actualizarEstado(i, j, y, infectadas);
-					}
+		for (int i = 0; i < tamano; ++i) {
+			for (int j = 0; j < tamano; ++j) {
+				infectadas = personasInfectadas(i, j);
+				for (int y = 0; y < matriz[i][j].size(); ++y) {
+					actualizarEstado(i, j, y, infectadas);
 				}
 			}
+		}
 
 		output += "\nTic#: " + to_string(tics);
 		output += "\nSusceptibles: " + to_string(tSusceptibles);
@@ -141,7 +141,7 @@ int Simulador::personasInfectadas(int i, int j) {
 	Estado estado;
 	int nInfectadas = 0;
 	for (int y = 0; y < matriz[i][j].size(); ++y) {
-		if (matriz[i][j][y].getEstado() == Infectada){
+		if (matriz[i][j][y].getEstado() == Infectada) {
 			nInfectadas++;
 		}
 	}
@@ -153,17 +153,10 @@ void Simulador::actualizarEstado(int i, int j, int y, int inf) {
 	Estado est = matriz[i][j][y].getEstado();
 	switch (est) {
 	case Infectada: {
-		if(matriz[i][j][y].getTiempoInfectado() >= ticsMuerte){
+		if (matriz[i][j][y].getTiempoInfectado() >= ticsMuerte) {
 			random_device rd;
 			int randomInt1 = rd() % 100;
-			bool muerta = true;
-			for (int g = 0; g < inf; g++) {
-				if (randomInt1 < probaRecu) {
-					muerta = false;
-				}
-			}
-			if (!muerta) {
-
+			if (randomInt1 < probaRecu) {
 				matriz[i][j][y].setEstado(Recuperada);
 				matriz[i][j][y].resetTiempo();
 				tRecuperadas++;
@@ -182,11 +175,17 @@ void Simulador::actualizarEstado(int i, int j, int y, int inf) {
 	case Susceptible: {
 		random_device rd;
 		int randomInt2 = rd() % 100;
-		if (randomInt2 < cantInfectada*inf) {
+		bool infectada = false;
+		for (int g = 0; g < inf; g++) {
+			if (randomInt2 < cantInfectada) {
+				infectada = true;
+			}
+		}
+		if (infectada) {
 			matriz[i][j][y].setEstado(Infectada);
 			tInfectadas++;
-		}
-		else {
+
+		}else {
 			tSusceptibles++;
 		}
 		break;
@@ -248,5 +247,5 @@ void Simulador::moverPersonas(int i, int j, int y) {
 }
 
 void Simulador::cantidadHilos(int n) {
-		hilos = n;
+	hilos = n;
 }
