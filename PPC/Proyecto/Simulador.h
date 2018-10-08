@@ -1,10 +1,12 @@
 #pragma once
+#pragma once
 #ifndef PPC_GoL_S // Programación Paralela y Concurrente - Conway's Game of Life
 #define PPC_GoL_S
 #include <vector>
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <random>
 #include <chrono> // para medir el tiempo de ejecución
 #include <omp.h>
 #include <list>
@@ -26,7 +28,7 @@ public:
 	int personasInfectadas(int i, int j);
 	void actualizarEstado(int i, int j, int y, int inf);
 	void moverPersonas(int i, int j, int y);
-	void cantidadHilosYTics(int n,int t);
+	void cantidadHilos(int n);
 	void init();
 
 private:
@@ -36,8 +38,7 @@ private:
 	int probaRecu;
 	int ticsMuerte;
 	int cantInfectada;
-	int tamaño;
-	int tics;
+	int tamano;
 
 	int tInfectadas;
 	int tSusceptibles;
